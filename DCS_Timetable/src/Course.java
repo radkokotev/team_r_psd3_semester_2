@@ -23,7 +23,7 @@ public class Course {
 
 	public void addSession (Session s) {
 		Data data = Data.getSingleton();
-		data.assignSessionToCourse(s.getName(), courseTitle);
+		data.assignSessionToCourse(s.getTitle(), courseTitle);
 		sessions.add(s);
 	}
 	
