@@ -91,4 +91,14 @@ public class Data {
 		}
 		return session.getStudents();
 	}
+	
+	public void importCourseFromMyCampus(MyCampusCourseImport myCampus) {
+		Course course = getCourse(myCampus.getCourseTitle());
+		for (String sessionTitle : myCampus.getAssociatedSessions()) {
+			assignSessionToCourse(sessionTitle, course.getCourseTitle());
+		}
+		for (String studentId : myCampus.getStudentsEnrolled()) {
+			assignStudentToCourse(studentId, course.getCourseTitle());
+		}
+	}
 }
