@@ -13,6 +13,7 @@ public class Session {
 	private Date startTime;
 	private Date endTime;
 	private int periodicity;
+	private boolean isCompulsory;
 	
 	public Session (Course course) {
 		this.course = course;
@@ -84,6 +85,14 @@ public class Session {
 		periodicity = period;
 	}
 	
+	public boolean getIsCompulsory() {
+		return isCompulsory;
+	}
+	
+	public void setIsCompulsory(boolean isCompulsory) {
+		this.isCompulsory = isCompulsory;
+	}
+	
 	public void addStudent (Student s) {
 		students.add(s);
 	}
@@ -100,6 +109,7 @@ public class Session {
 	public String toString() {
 		String result =  "Session title: " + title +
 				", tutor" + tutor +
+				", is compulsory: " + isCompulsory +
 				", room: " + room + 
 				", startTime: " + startTime.toString() + 
 				", endTime: " + endTime.toString() + 
