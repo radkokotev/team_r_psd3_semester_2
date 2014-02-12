@@ -1,7 +1,7 @@
 package data;
 
 import org.osgi.framework.BundleActivator;
-import ogr.osgi.framework.BundleContext;
+import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator  {
 

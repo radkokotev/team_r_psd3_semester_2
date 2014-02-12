@@ -78,19 +78,50 @@
 		/>
 
 	</target>
-
-
+	
 	<target
-		name="run"
-		depends="compile"
-		description="Invokes the application from the default entry point."
+		name="osgi.init"
+		description="Prepares an OSGi runtime environment with default bundles."
+		depends="resolve"
 	>
 
+		<mkdir dir="bundle" />
+		
+		<copy todir="bundle">
+			<fileset dir="lib" includes="org.apache.felix.gogo.shell-0.10.0.jar" />
+			<fileset dir="lib" includes="org.apache.felix.bundlerepository-1.6.0.jar" />
+			<fileset dir="lib" includes="org.apache.felix.gogo.command-0.12.0.jar" />
+			<fileset dir="lib" includes="org.apache.felix.gogo.runtime-0.10.0.jar" />
+		</copy>
+		
+	</target>
+	
+	<target
+		name="osgi.run"
+		depends="osgi.init"
+	>
+		
 		<java
-			classname="uk.ac.glasgow.senotes.ant.HelloWorldProject"
-			fork="yes"
-			classpathref="project.classpath"
-		/>
+			classname="org.apache.felix.main.Main"
+			fork="yes" taskname=""
+		>
+			
+			<classpath>
+				<pathelement location="lib/org.apache.felix.main-4.2.1.jar" />
+				<pathelement location="lib/derby-10.10.1.1.jar" />
+			</classpath>
+			<jvmarg value="-Dfelix.config.properties=file:config/felix.properties" />
+			<arg value="felix-cache" />
+			
+		</java>
+		
+	</target>
+	
+	<target
+		name="run"
+		depends="osgi.run"
+		description="Invokes the application from the default entry point."
+	>
 
 	</target>
 

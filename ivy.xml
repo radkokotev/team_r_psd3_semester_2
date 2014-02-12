@@ -2,19 +2,23 @@
 
 
     <info 
-      organisation="uk.ac.glasgow"
-      module="senotes.demos.ant"
+      organisation=""
+      module="DCS_Timetable"
       />
       
 
     <dependencies>
     
-        <dependency
-	 	 	org="junit"
-			name="junit"
-			conf="default"
-			rev="4.8.2"/>
-                            
+        <dependency org="junit" name="junit" conf="default" rev="4.8.2"/>
+                
+    	<dependency org="org.apache.felix" name="org.apache.felix.main" rev="4.2.1" />
+    	
+	<dependency org="org.apache.derby" name="derby" rev="10.10.1.1"/>
+    
+        <dependency org="org.apache.felix" name="org.apache.felix.gogo.command" rev="0.12.0"/>
+        
+        <dependency org="org.apache.felix" name="org.apache.felix.gogo.shell" rev="0.10.0"/>
+            
     </dependencies>
 
 

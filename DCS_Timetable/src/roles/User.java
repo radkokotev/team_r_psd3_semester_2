@@ -1,5 +1,7 @@
 package roles;
 
+import java.util.Date;
+
 import data.Course;
 import data.Data;
 import data.MyCampusCourseImport;
@@ -150,21 +152,7 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 		}		
 	}
 	
-	@Override
-	public void createTimeSlotForSession(Date startTime, Date endTime, String sessionTitle){
-		throws PermissionsDeniedException {
-			if(isAdmin){
-				Data data = Data.getSingleton();
-				Session session = data.getSession(sessionTitle);
-				session.setStartTime(startTime);
-				session.setEndTime(endTime);
-				}
-			else {
-			PermissionsDeniedException e = new PermissionsDeniedException(
-					"Permissions denied to createTimeSlotForSession");
-			throw(e);
-		}
-	}
+
 
 	@Override
 	public String getInformationForSession(String sessionTitle)
@@ -178,5 +166,22 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 					"Permissions denied to getInformationForSession");
 			throw(e);
 		}	
+	}
+
+	@Override
+	public void createTimeSlotForSession(Date startTime, Date endTime,
+			String SessionTitle) throws PermissionsDeniedException {
+		if(isAdmin){
+			Data data = Data.getSingleton();
+			Session session = data.getSession(SessionTitle);
+			session.setStartTime(startTime);
+			session.setEndTime(endTime);
+			}
+		else {
+		PermissionsDeniedException e = new PermissionsDeniedException(
+				"Permissions denied to createTimeSlotForSession");
+		throw(e);
+		
+		}
 	}
 }
