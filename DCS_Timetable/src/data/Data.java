@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 
-public class Data {
+public class Data implements DataInterface{
 	private static Data instance;
 	
 	private HashMap<String, Course> titlesToCourses;
@@ -51,6 +51,9 @@ public class Data {
 		if (session == null) {
 			session = new Session(course, sessionTitle);
 			titlesToSession.put(sessionTitle, session);
+		}
+		if (course.getSessions().contains(session)) {
+			return;
 		}
 		course.addSession(session);
 	}

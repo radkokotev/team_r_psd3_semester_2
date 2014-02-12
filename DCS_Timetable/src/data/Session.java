@@ -28,12 +28,31 @@ public class Session {
 		this.title = "";
 		this.room = "";
 		this.students = new HashSet<Student>();
+		this.startTime = new Date();
+		this.endTime = new Date();
+		this.tutor = "";
+		this.students = new HashSet<Student>();
 	}
 	
 	public Session (Course course, String title) {
+		this.title = title;
+		this.course = course;
+		this.room = "";
+		this.students = new HashSet<Student>();
+		this.startTime = new Date();
+		this.endTime = new Date();
+		this.tutor = "";
+		this.students = new HashSet<Student>();
+	}
+	
+	public Session (Course course, String title, Date startTime, Date endTime) {
 		this.course = course;
 		this.title = title;
 		this.room = "";
+		this.students = new HashSet<Student>();
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.tutor = "";
 		this.students = new HashSet<Student>();
 	}
 

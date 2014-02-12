@@ -80,6 +80,23 @@
 	</target>
 	
 	<target
+		name="bundles"
+		description="Builds OSGi bundles for the project."
+		depends="compile"
+	>
+
+		<jar update="no" destfile="data.jar" manifest="config/osgi/DATA.MF">
+			<fileset dir="bin/" includes="data/*.class" />
+		</jar>
+		
+		<jar update="no" destfile="roles.jar" manifest="config/osgi/ROLES.MF">
+			<fileset dir="bin/" includes="roles/*.class" />
+		</jar>
+
+
+	</target>
+	
+	<target
 		name="osgi.init"
 		description="Prepares an OSGi runtime environment with default bundles."
 		depends="resolve"

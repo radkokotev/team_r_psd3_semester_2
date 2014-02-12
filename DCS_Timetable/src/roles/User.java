@@ -4,6 +4,7 @@ import java.util.Date;
 
 import data.Course;
 import data.Data;
+import data.DataInterface;
 import data.MyCampusCourseImport;
 import data.Session;
 import data.Student;
@@ -21,6 +22,7 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	private boolean isLecturer;
 	private boolean isTutor;
 	private boolean isStudent;
+	private DataInterface data;
 	
 	public User(boolean isAdmin, boolean isLecturer, 
 			boolean isTutor, boolean isStudent) {
@@ -34,7 +36,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public void bookSlotForCourse(String id, String sessionTitle, String courseTitle) 
 			throws PermissionsDeniedException {
 		if (isStudent || isAdmin) {
-			Data data = Data.getSingleton();
 			data.assignStudenttoSession(id, sessionTitle, courseTitle);
 		} else {
 			PermissionsDeniedException e = new PermissionsDeniedException(
@@ -47,7 +48,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public String getAllCompulsorySessionsForCourse(String id, String courseTitle) 
 			throws PermissionsDeniedException {
 		if (isStudent || isAdmin) {
-			Data data = Data.getSingleton();
 			Course course = data.getCourse(courseTitle);
 			String result = "";
 			for (Session s : course.getSessions()) {
@@ -65,7 +65,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public String getSessionsForWhichEnrolled(String id, String courseTitle) 
 			throws PermissionsDeniedException {
 		if (isStudent || isAdmin) {
-			Data data = Data.getSingleton();
 			Course course = data.getCourse(courseTitle);
 			Student student = data.getStudent(id);
 			String result = "";
@@ -86,7 +85,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public void setSessionToBeCompulsory(String sessionTitle, boolean isCompulsory)
 			throws PermissionsDeniedException {
 		if (isLecturer || isAdmin) {
-			Data data = Data.getSingleton();
 			Session session = data.getSession(sessionTitle);
 			session.setIsCompulsory(isCompulsory);
 		} else {
@@ -101,7 +99,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 			MyCampusCourseImport myCampusImport)
 			throws PermissionsDeniedException {
 		if (isLecturer || isAdmin) {
-			Data data = Data.getSingleton();
 			data.importCourseFromMyCampus(myCampusImport);
 		} else {
 			PermissionsDeniedException e = new PermissionsDeniedException(
@@ -114,7 +111,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public void addSessionToCourse(String sessionTitle, String courseTitle)
 			throws PermissionsDeniedException {
 		if (isLecturer || isAdmin) {
-			Data data = Data.getSingleton();
 			data.assignSessionToCourse(sessionTitle, courseTitle);
 		} else {
 			PermissionsDeniedException e = new PermissionsDeniedException(
@@ -128,7 +124,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public void specifyPeriodicityForSession(String sessionTitle,
 			int periodicity) throws PermissionsDeniedException {
 		if (isLecturer || isAdmin) {
-			Data data = Data.getSingleton();
 			Session session = data.getSession(sessionTitle);
 			session.setPeriodicity(periodicity);
 		} else {
@@ -142,7 +137,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public void assignRoomToSession(String room, String sessionTitle)
 			throws PermissionsDeniedException {
 		if (isAdmin) {
-			Data data = Data.getSingleton();
 			Session session = data.getSession(sessionTitle);
 			session.setRoom(room);
 		} else {
@@ -158,7 +152,6 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public String getInformationForSession(String sessionTitle)
 			throws PermissionsDeniedException {
 		if (isTutor || isAdmin) {
-			Data data = Data.getSingleton();
 			Session session = data.getSession(sessionTitle);
 			return session.toString();
 		} else {
@@ -170,10 +163,14 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 
 	@Override
 	public void createTimeSlotForSession(Date startTime, Date endTime,
-			String SessionTitle) throws PermissionsDeniedException {
+			String sessionTitle) throws PermissionsDeniedException {
 		if(isAdmin){
-			Data data = Data.getSingleton();
-			Session session = data.getSession(SessionTitle);
+			Session session = data.getSession(sessionTitle);
+			if(session == null) {
+				Course course = data.getCourse("PSD");
+				session = new Session(course, sessionTitle);
+				data.assignSessionToCourse(sessionTitle, "PSD");
+			}
 			session.setStartTime(startTime);
 			session.setEndTime(endTime);
 			}
@@ -183,5 +180,9 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 		throw(e);
 		
 		}
+	}
+	
+	public void setData(DataInterface data2){
+		data = data2;
 	}
 }

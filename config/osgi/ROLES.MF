@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Roles implementation 
+Bundle-SymbolicName: roles
+Bundle-Version: 1.0.0
+Bundle-Activator: roles.Activator
+Bundle-Vendor: Team R
+Bundle-Localization: plugin
+Import-Package: data, org.osgi.framework;version="1.3.0"
+  
