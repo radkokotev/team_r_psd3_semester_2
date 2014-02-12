@@ -20,7 +20,7 @@ public class Activator implements BundleActivator  {
 	  data = context.getService(serviceReference);
 	  user.setData(data);
 	  
-	  user.createTimeSlotForSession(new Date(), new Date(), "PSD Lab");
+	  user.createTimeSlotForSession(new Date(), new Date(),"PSD", "PSD Lab");
 	  System.out.println(user.getInformationForSession("PSD Lab"));
   }
   

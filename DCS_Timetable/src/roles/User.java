@@ -162,14 +162,14 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	}
 
 	@Override
-	public void createTimeSlotForSession(Date startTime, Date endTime,
+	public void createTimeSlotForSession(Date startTime, Date endTime, String courseTitle,
 			String sessionTitle) throws PermissionsDeniedException {
 		if(isAdmin){
 			Session session = data.getSession(sessionTitle);
 			if(session == null) {
-				Course course = data.getCourse("PSD");
+				Course course = data.getCourse(courseTitle);
 				session = new Session(course, sessionTitle);
-				data.assignSessionToCourse(sessionTitle, "PSD");
+				data.assignSessionToCourse(sessionTitle, courseTitle);
 			}
 			session.setStartTime(startTime);
 			session.setEndTime(endTime);
