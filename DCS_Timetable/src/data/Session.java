@@ -3,6 +3,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author	Kotev, Greblikas, Turner, Vascila, Tachev
+ * @version	1.0
+ * 
+ * Provides functionality for timetable management system.
+ * 
+ * Method javadocs to be added in future.
+ */
 
 public class Session {
 	private String title;
