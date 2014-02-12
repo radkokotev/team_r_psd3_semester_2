@@ -6,6 +6,14 @@ import data.MyCampusCourseImport;
 import data.Session;
 import data.Student;
 
+/**
+ * Provides User class. Private boolean dictates permission level. 
+ * Each permission is an interface that is implemented by the class.
+ * 
+ * @author	Kotev, Greblikas, Turner, Vascila, Tachev
+ * @version	1.0
+ */
+
 public class User implements AdministratorRole, LecturerRole, StudentRole, TutorRole {
 	private boolean isAdmin;
 	private boolean isLecturer;
