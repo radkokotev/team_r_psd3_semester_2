@@ -149,6 +149,19 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 			throw(e);
 		}		
 	}
+	
+	@Override
+	public void createTimeSlotForSession(Date startTime, Date endTime, String sessionTitle){
+		throws PermissionsDeniedException {
+			if(isAdmin){
+				
+			}
+			else {
+			PermissionsDeniedException e = new PermissionsDeniedException(
+					"Permissions denied to createTimeSlotForSessio");
+			throw(e);
+		}
+	}
 
 	@Override
 	public String getInformationForSession(String sessionTitle)
