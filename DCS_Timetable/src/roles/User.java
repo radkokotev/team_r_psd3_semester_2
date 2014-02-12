@@ -154,11 +154,14 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public void createTimeSlotForSession(Date startTime, Date endTime, String sessionTitle){
 		throws PermissionsDeniedException {
 			if(isAdmin){
-				
-			}
+				Data data = Data.getSingleton();
+				Session session = data.getSession(sessionTitle);
+				session.setStartTime(startTime);
+				session.setEndTime(endTime);
+				}
 			else {
 			PermissionsDeniedException e = new PermissionsDeniedException(
-					"Permissions denied to createTimeSlotForSessio");
+					"Permissions denied to createTimeSlotForSession");
 			throw(e);
 		}
 	}
