@@ -3,7 +3,6 @@ package roles;
 import java.util.Date;
 
 import data.Course;
-import data.Data;
 import data.DataInterface;
 import data.MyCampusCourseImport;
 import data.Session;
