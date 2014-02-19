@@ -12,6 +12,8 @@ public class Course {
 	public Course (String title) {
 		this.courseTitle = title;
 		sessions = new HashSet<Session>();
+		//has to instantiate this hashset as well
+		students = new HashSet<Student>();
 	}
 		
 	public String getCourseTitle() {
