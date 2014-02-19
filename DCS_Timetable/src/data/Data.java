@@ -111,7 +111,7 @@ public class Data implements DataInterface{
 	}
 	
 	// boolean method to for checking if a session is into the set
-		public boolean hasStudents(Student student){
-			return idsToStudents.containsKey(student.getId());
+	public boolean hasStudents(Student student){
+		return idsToStudents.containsKey(student.getId());
 		}
 }
