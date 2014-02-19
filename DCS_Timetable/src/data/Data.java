@@ -10,7 +10,7 @@ public class Data implements DataInterface{
 	private HashMap<String, Session> titlesToSession;
 	private HashMap<String, Student> idsToStudents;
 	
-	private Data() {
+	public Data() {
 		titlesToCourses = new HashMap<String, Course>();;
 		titlesToSession = new HashMap<String, Session>();
 		idsToStudents = new HashMap<String,Student>();
@@ -50,7 +50,7 @@ public class Data implements DataInterface{
 		Course course = getCourse(courseTitle);
 		if (session == null) {
 			session = new Session(course, sessionTitle);
-			titlesToSession.put(sessionTitle, session);
+			this.titlesToSession.put(sessionTitle, session);
 		}
 		if (course.getSessions().contains(session)) {
 			return;
@@ -105,4 +105,13 @@ public class Data implements DataInterface{
 			assignStudentToCourse(studentId, course.getCourseTitle());
 		}
 	}
+	// boolean method to for checking if a session is into the set
+	public boolean hasSession(Session session){
+		return titlesToSession.containsKey(session.getTitle());
+	}
+	
+	// boolean method to for checking if a session is into the set
+		public boolean hasStudents(Student student){
+			return idsToStudents.containsKey(student.getId());
+		}
 }
