@@ -3,6 +3,7 @@ package roles;
 import java.util.Date;
 
 import data.Course;
+import data.Data;
 import data.DataInterface;
 import data.MyCampusCourseImport;
 import data.Session;
@@ -29,6 +30,8 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 		this.isLecturer = isLecturer;
 		this.isTutor = isTutor;
 		this.isStudent = isStudent;
+		//instantiate data object
+		this.data = new Data();
 	}
 
 	@Override
@@ -183,5 +186,9 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	
 	public void setData(DataInterface data2){
 		data = data2;
+	}
+	// getter for Data object
+	public Data getData(){
+		return (Data) data;
 	}
 }
