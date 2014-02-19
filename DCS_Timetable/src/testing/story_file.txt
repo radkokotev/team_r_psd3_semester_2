@@ -1,0 +1,12 @@
+User Story
+As a student,
+I want to book a timetable slot for each session of my course,
+So that I can take the course.
+
+Priority: Must have
+
+Scenarios
+
+Given a course
+When enrolled in a that course
+Then I will have to be able to successfully sign up for a session in that course
