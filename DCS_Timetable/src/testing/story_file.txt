@@ -1,4 +1,20 @@
 User Story
+
+As a lecturer,
+I want to add a session to a course,
+So that timetable slots can be identified.
+
+Priority: Must have
+Cost: 1
+
+Scenarios
+
+Given a course
+When a session is created for this course
+Then to be able to assign that session for this course
+
+User Story
+
 As a student,
 I want to book a timetable slot for each session of my course,
 So that I can take the course.
@@ -10,3 +26,18 @@ Scenarios
 Given a course
 When enrolled in a that course
 Then I will have to be able to successfully sign up for a session in that course
+
+User Story
+
+As an administrator,
+I want to assign a room to a timetable slot,
+So that room bookings can be recorded.
+
+Priority: Must have
+Cost: 1
+
+Scenarios
+
+Given a session for a course
+When created a timetable slot
+Then assign a room to that timetable slot
