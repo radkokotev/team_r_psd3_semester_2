@@ -42,63 +42,6 @@ public class UserStoriesTests {
 	}
 	
 	/**
-	 * Testing user story 2:
-	 * As a lecturer, 
-	 * I want to add a session to a course,
-	 * So that timetable slots can be identified.
-	 */
-	@Test
-	public void lecturerAssignSessionToCourseTest() {
-		LecturerRole user = new User(false,true,false,false);
-		try {
-			user.addSessionToCourse(session.getTitle(), course.getCourseTitle());
-			assertTrue(data.hasSession(session.getTitle()));
-		} catch (PermissionsDeniedException e) {
-			fail("Unexpected permission denial");
-		}
-	}
-	
-	/**
-	 * Test for user story 11:
-	 * As an administrator,
-	 * I want to assign a room to a timetable slot,
-	 * So that room bookings can be recorded.
-	 */
-	@Test
-	public void studentBookSlotForCourseTest() {
-		StudentRole user = new User(false,false,false,true);
-		// When enrolled in that course
-		course.addStudent(student);
-		try {
-			user.bookSlotForCourse(student.getId(), session.getTitle(), course.getCourseTitle());
-			assertTrue(data.hasSession(session.getTitle()));
-			assertTrue(data.hasStudent(student.getId()));
-		} catch (PermissionsDeniedException e) {
-			fail("Unexpected permission denial");
-		}
-	}
-	
-	/**
-	 * Test for user story 8:
-	 * As a administrator,
-	 * I want to assign a room to a timetable slot,
-	 * So that room bookings can be recorded.
-	 */
-	@Test
-	public void administratorAssignRoomTest() {
-		AdministratorRole user = new User(true,false,false,false);
-		String room = "BO507";
-		course.addSession(session);
-		try {
-			user.createTimeSlotForSession(new Date(), new Date(), "PSD3", session.getTitle());
-			user.assignRoomToSession(room, session.getTitle());
-			assertEquals(room, data.getSession(session.getTitle()).getRoom());
-		} catch (PermissionsDeniedException e) {
-			fail("Unexpected permission denial");
-		}
-	}
-	
-	/**
 	 * Testing user story 1:
 	 * As a lecturer, 
 	 * I want to import a MyCampus course,
@@ -140,5 +83,80 @@ public class UserStoriesTests {
 			fail("Unexpected permission denial");
 		}
 	}
-		
+	
+	/**
+	 * Testing user story 2:
+	 * As a lecturer, 
+	 * I want to add a session to a course,
+	 * So that timetable slots can be identified.
+	 */
+	@Test
+	public void lecturerAssignSessionToCourseTest() {
+		LecturerRole user = new User(false,true,false,false);
+		try {
+			user.addSessionToCourse(session.getTitle(), course.getCourseTitle());
+			assertTrue(data.hasSession(session.getTitle()));
+		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}
+	
+	/**
+	 * Testing user story 4:
+	 * As a lecturer, 
+	 * I want to specify that a session is a one off, 
+	 * or recurs weekly or fortnightly,
+	 * So that I don't have to create a large number of sessions.
+	 */
+	@Test
+	public void lecturerSessionRecurenceTest() {
+		LecturerRole user = new User(false,true,false,false);
+		try {
+			int periodicity = 2;
+			user.specifyPeriodicityForSession(session.getTitle(), periodicity);
+			assertEquals(periodicity, data.getSession(session.getTitle()).getPeriodicity());
+		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}
+	
+	/**
+	 * Test for user story 8:
+	 * As a administrator,
+	 * I want to assign a room to a timetable slot,
+	 * So that room bookings can be recorded.
+	 */
+	@Test
+	public void administratorAssignRoomTest() {
+		AdministratorRole user = new User(true,false,false,false);
+		String room = "BO507";
+		course.addSession(session);
+		try {
+			user.createTimeSlotForSession(new Date(), new Date(), "PSD3", session.getTitle());
+			user.assignRoomToSession(room, session.getTitle());
+			assertEquals(room, data.getSession(session.getTitle()).getRoom());
+		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}
+	
+	/**
+	 * Test for user story 11:
+	 * As an administrator,
+	 * I want to assign a room to a timetable slot,
+	 * So that room bookings can be recorded.
+	 */
+	@Test
+	public void studentBookSlotForCourseTest() {
+		StudentRole user = new User(false,false,false,true);
+		// When enrolled in that course
+		course.addStudent(student);
+		try {
+			user.bookSlotForCourse(student.getId(), session.getTitle(), course.getCourseTitle());
+			assertTrue(data.hasSession(session.getTitle()));
+			assertTrue(data.hasStudent(student.getId()));
+		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}	
 }
