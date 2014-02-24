@@ -77,4 +77,18 @@ public interface DataInterface {
 	 * @param myCampus the import delegate for a given course
 	 */
 	public void importCourseFromMyCampus(MyCampusCourseImport myCampus);
+	
+	/**
+	 * Checking if a session is already registered
+	 * @param sessionTitle the title of the session 
+	 * @return true if the session already exists and false otherwise
+	 */
+	public boolean hasSession(String sessionTitle);
+
+	/**
+	 * Checking if a student is already registered
+	 * @param studentId the matriculation number of the student 
+	 * @return true if the student already exists and false otherwise
+	 */
+	public boolean hasStudent(String studentId);
 }

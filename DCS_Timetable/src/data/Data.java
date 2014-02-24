@@ -10,7 +10,7 @@ public class Data implements DataInterface{
 	private HashMap<String, Session> titlesToSession;
 	private HashMap<String, Student> idsToStudents;
 	
-	public Data() {
+	private Data() {
 		titlesToCourses = new HashMap<String, Course>();;
 		titlesToSession = new HashMap<String, Session>();
 		idsToStudents = new HashMap<String,Student>();
@@ -105,13 +105,12 @@ public class Data implements DataInterface{
 			assignStudentToCourse(studentId, course.getCourseTitle());
 		}
 	}
-	// boolean method to for checking if a session is into the set
-	public boolean hasSession(Session session){
-		return titlesToSession.containsKey(session.getTitle());
+
+	public boolean hasSession(String sessionTitle) {
+		return titlesToSession.containsKey(sessionTitle);
 	}
 	
-	// boolean method to for checking if a session is into the set
-	public boolean hasStudents(Student student){
-		return idsToStudents.containsKey(student.getId());
-		}
+	public boolean hasStudent(String studentId) {
+		return idsToStudents.containsKey(studentId);
+	}
 }

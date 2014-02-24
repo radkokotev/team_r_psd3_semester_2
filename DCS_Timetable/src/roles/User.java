@@ -31,7 +31,7 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 		this.isTutor = isTutor;
 		this.isStudent = isStudent;
 		//instantiate data object
-		this.data = new Data();
+		this.data = Data.getSingleton();
 	}
 
 	@Override
