@@ -1,5 +1,21 @@
 User Story
 
+As a lecturer, 
+I want to import a MyCampus course,
+So that teaching sessions can be identified.
+
+Priority: Should have
+Cost: 1
+
+Scenarios
+
+Given a course and a session
+When there are two students
+Then I would like to check the data the information relating this session
+and the information relating students in that session
+
+User Story
+
 As a lecturer,
 I want to add a session to a course,
 So that timetable slots can be identified.
@@ -15,17 +31,19 @@ Then to be able to assign that session for this course
 
 User Story
 
-As a student,
-I want to book a timetable slot for each session of my course,
-So that I can take the course.
+As a lecturer, 
+I want to specify that a session is a one off, 
+or recurs weekly or fortnightly,
+So that I don't have to create a large number of sessions.
 
-Priority: Must have
+Priority: Should have
+Cost: 2
 
 Scenarios
 
-Given a course
-When enrolled in a that course
-Then I will have to be able to successfully sign up for a session in that course
+Given a session
+When specified the periodicity
+Then the database should be updated correctly
 
 User Story
 
@@ -41,3 +59,19 @@ Scenarios
 Given a session for a course
 When created a timetable slot
 Then assign a room to that timetable slot
+
+User Story
+
+As a student,
+I want to book a timetable slot for each session of my course,
+So that I can take the course.
+
+Priority: Must have
+
+Scenarios
+
+Given a course
+When enrolled in a that course
+Then I will have to be able to successfully sign up for a session in that course
+
+
