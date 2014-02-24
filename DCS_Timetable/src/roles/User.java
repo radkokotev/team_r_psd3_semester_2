@@ -73,7 +73,7 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 			Student student = data.getStudent(id);
 			String result = "";
 			for (Session s : course.getSessions()) {
-				if (s.getStudents().contains(student)) {
+				if (s.getIsCompulsory() && s.getStudents().contains(student)) {
 					result += s.toString();
 				}
 			}

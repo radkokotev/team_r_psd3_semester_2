@@ -1,6 +1,7 @@
 package testing;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -16,6 +17,7 @@ import roles.AdministratorRole;
 import roles.LecturerRole;
 import roles.PermissionsDeniedException;
 import roles.StudentRole;
+import roles.TutorRole;
 import roles.User;
 import data.Course;
 import data.Data;
@@ -29,7 +31,7 @@ public class UserStoriesTests {
 	private Course course;
 	private Student student;
 	private Session session;
-	//private User user;
+	private Date date;
 	private DataInterface data;
 	
 	@Before
@@ -38,6 +40,7 @@ public class UserStoriesTests {
 		course = new Course("PSD3");
 		student = new Student("1","Mihail","Tachev");
 		session = new Session(course, "Lab1");
+		date = new Date();
 		data = Data.getSingleton();
 	}
 	
@@ -132,7 +135,7 @@ public class UserStoriesTests {
 		String room = "BO507";
 		course.addSession(session);
 		try {
-			user.createTimeSlotForSession(new Date(), new Date(), "PSD3", session.getTitle());
+			user.createTimeSlotForSession(date, date, "PSD3", session.getTitle());
 			user.assignRoomToSession(room, session.getTitle());
 			assertEquals(room, data.getSession(session.getTitle()).getRoom());
 		} catch (PermissionsDeniedException e) {
@@ -142,7 +145,7 @@ public class UserStoriesTests {
 	
 	/**
 	 * Test for user story 11:
-	 * As an administrator,
+	 * As a student,
 	 * I want to assign a room to a timetable slot,
 	 * So that room bookings can be recorded.
 	 */
@@ -159,4 +162,83 @@ public class UserStoriesTests {
 			fail("Unexpected permission denial");
 		}
 	}	
+	
+	/**
+	 * Test for user story 12:
+	 * As a student,
+	 * I want to check that I have signed up for all compulsory sessions,
+	 * So that I don't fail the course.
+	 */
+	@Test
+	public void studentChecksCompulsorySessionsTest() {
+		StudentRole user = new User(false,false,false,true);
+		// When enrolled in that course
+		course.addStudent(student);
+		String compulsory;
+		String enrolled;
+		try {
+			// check no compulsory
+			compulsory = user.getAllCompulsorySessionsForCourse(student.getId(), 
+					course.getCourseTitle());
+			enrolled = user.getSessionsForWhichEnrolled(student.getId(), 
+					course.getCourseTitle());
+			assertEquals(compulsory, enrolled);
+			
+			// check not enrolled for all
+			User admin = new User(true,false,false,false);
+			// set session to be compulsory
+			admin.setSessionToBeCompulsory(session.getTitle(), true);
+			compulsory = user.getAllCompulsorySessionsForCourse(student.getId(), 
+					course.getCourseTitle());
+			enrolled = user.getSessionsForWhichEnrolled(student.getId(), 
+					course.getCourseTitle());
+			boolean match = compulsory.equals(enrolled);
+			assertFalse(match);
+			
+			// check enrolled for all
+			user.bookSlotForCourse(student.getId(), session.getTitle(), 
+					course.getCourseTitle());  // enrol student for the session
+			compulsory = user.getAllCompulsorySessionsForCourse(student.getId(), 
+					course.getCourseTitle());
+			enrolled = user.getSessionsForWhichEnrolled(student.getId(), 
+					course.getCourseTitle());
+			assertEquals(compulsory, enrolled);
+		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}
+	
+	
+	/**
+	 * Testing user story 14:
+	 * As a tutor,
+	 * I want to see the details (time, location, students, tutor) of 
+	 * every timetable slot in a session,
+	 * So that I know when sessions happen.
+	 */
+	@Test
+	public void lecturerGetSessionDetailsTest() {
+		TutorRole user = new User(false,false,true,false);
+		String expected = 
+				"Session title: Lab1, tutor, is compulsory: false, room: , " + 
+				"startTime: " + date.toString() + ", endTime: " + date.toString() + ", " +
+				"periodicity: 0\n" +
+				"Student list:\n";
+		try {
+			String result = user.getInformationForSession(session.getTitle());
+			assertEquals(expected, result);
+		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}
+	
+	/**
+	 * Test permissions denied
+	 * @throws PermissionsDeniedException will through an exception
+	 */
+	@Test(expected = PermissionsDeniedException.class) 
+	public void permissionsDeniedTest() throws PermissionsDeniedException {
+		User user = new User(false,false,false,false);
+		user.getSessionsForWhichEnrolled(student.getId(), course.getCourseTitle());
+	}
 }
