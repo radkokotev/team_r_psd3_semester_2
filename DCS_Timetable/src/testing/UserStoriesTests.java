@@ -142,9 +142,9 @@ public class UserStoriesTests {
 	
 	/**
 	 * Test for user story 11:
-	 * As an administrator,
-	 * I want to assign a room to a timetable slot,
-	 * So that room bookings can be recorded.
+	 * As a student,
+	 * I want to book a timetable slot for each session of my course,
+	 * So that I can take the course.
 	 */
 	@Test
 	public void studentBookSlotForCourseTest() {
