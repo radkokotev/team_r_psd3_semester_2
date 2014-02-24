@@ -1,5 +1,18 @@
 User Story
 
+As a lecturer, 
+I want to import a MyCampus course,
+So that teaching sessions can be identified.
+
+Scenarios
+
+Given a course and a session
+When there are two students
+Then I would like to check the data the information relating this session
+and the information relating students in that session
+
+User Story
+
 As a lecturer,
 I want to add a session to a course,
 So that timetable slots can be identified.
