@@ -242,6 +242,27 @@ public class UserStoriesTests {
 	}
 	
 	/**
+	 * Test security/1 non functional requirement
+	 * The system shall distinguish between lecturers, administrators, tutors and student roles.
+	 */
+	@Test
+	public void testUsersPrivileges(){
+		User admin = new User(true, false, false, false);
+		User lecturer = new User(false, true, false, false);
+		User tutor = new User(false, false, true, false);
+		User student = new User(false, false, false, true);
+		
+		assertTrue(admin.isAdmin());
+		assertTrue(lecturer.isLecturer());
+		assertTrue(tutor.isTutor());
+		assertTrue(student.isStudent());
+		assertFalse(admin.isStudent());
+		assertFalse(admin.isLecturer());
+		assertFalse(tutor.isLecturer());
+		assertFalse(student.isAdmin());
+	}
+	
+	/**
 	 * Testing performance/0 non functional requirement
 	 * The system shall support at least 100 courses.
 	 * @throws Exception 
@@ -268,6 +289,7 @@ public class UserStoriesTests {
 			Session session = data.getSession(Integer.toString(i));
 			session.setType(Integer.toString(i));
 		}
+		assertTrue(data.getSessionsForCourse(course.getCourseTitle()).size() >= 10);
 	}
 	
 	private boolean getRandomBoolean(){
@@ -282,9 +304,11 @@ public class UserStoriesTests {
 	
 	@Test
 	public void testUsers1000(){
+		User[] users = new User[1000];
 		for(int i = 0; i < 1000; i++){
-			new User(getRandomBoolean(), getRandomBoolean(), getRandomBoolean(), getRandomBoolean());
+			users[i] = new User(getRandomBoolean(), getRandomBoolean(), getRandomBoolean(), getRandomBoolean());
 		}
+		
 	}
 	
 	/**
@@ -349,8 +373,10 @@ public class UserStoriesTests {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(Thread.activeCount() > 100)
+				if(Thread.activeCount() >= 100) {
 					setIsAlive(false);
+					assert(true);
+				}
 				i++;
 			}
 		}

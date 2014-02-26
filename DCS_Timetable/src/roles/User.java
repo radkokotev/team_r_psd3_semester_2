@@ -193,4 +193,20 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public Data getData(){
 		return (Data) data;
 	}
+	
+	public boolean isAdmin(){
+		return isAdmin;
+	}
+	
+	public boolean isLecturer(){
+		return isLecturer;
+	}
+	
+	public boolean isTutor(){
+		return isTutor;
+	}
+	
+	public boolean isStudent(){
+		return isStudent;
+	}
 }
