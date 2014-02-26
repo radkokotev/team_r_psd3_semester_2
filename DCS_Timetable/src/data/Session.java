@@ -22,6 +22,7 @@ public class Session {
 	private Date endTime;
 	private int periodicity;
 	private boolean isCompulsory;
+	private String type;
 	
 	public Session (Course course) {
 		this.course = course;
@@ -32,6 +33,7 @@ public class Session {
 		this.endTime = new Date();
 		this.tutor = "";
 		this.students = new HashSet<Student>();
+		this.type = "Lab";
 	}
 	
 	public Session (Course course, String title) {
@@ -43,6 +45,7 @@ public class Session {
 		this.endTime = new Date();
 		this.tutor = "";
 		this.students = new HashSet<Student>();
+		this.type = "Lab";
 	}
 	
 	public Session (Course course, String title, Date startTime, Date endTime) {
@@ -54,6 +57,7 @@ public class Session {
 		this.endTime = endTime;
 		this.tutor = "";
 		this.students = new HashSet<Student>();
+		this.type = "Lab";
 	}
 
 	public String getTitle() {
@@ -132,10 +136,19 @@ public class Session {
 		return students;
 	}
 	
+	public void setType(String type){
+		this.type = type;
+	}
+	
+	public String getType(){
+		return type;
+	}
+	
 	@Override
 	public String toString() {
 		String result =  "Session title: " + title +
-				", tutor" + tutor +
+				", type: " + type + 
+				", tutor: " + tutor +
 				", is compulsory: " + isCompulsory +
 				", room: " + room + 
 				", startTime: " + startTime.toString() + 

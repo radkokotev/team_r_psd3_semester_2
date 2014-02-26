@@ -113,4 +113,8 @@ public class Data implements DataInterface{
 	public boolean hasStudent(String studentId) {
 		return idsToStudents.containsKey(studentId);
 	}
+	
+	public int getNumberOfCourses(){
+		return titlesToCourses.size();
+	}
 }

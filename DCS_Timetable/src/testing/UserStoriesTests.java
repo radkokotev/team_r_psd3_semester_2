@@ -33,9 +33,10 @@ public class UserStoriesTests {
 	private Session session;
 	private Date date;
 	private DataInterface data;
+	private boolean isAlive = true;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		//Given a
 		course = new Course("PSD3");
 		student = new Student("1","Mihail","Tachev");
@@ -238,5 +239,122 @@ public class UserStoriesTests {
 	public void permissionsDeniedTest() throws PermissionsDeniedException {
 		User user = new User(false,false,false,false);
 		user.getSessionsForWhichEnrolled(student.getId(), course.getCourseTitle());
+	}
+	
+	/**
+	 * Testing performance/0 non functional requirement
+	 * The system shall support at least 100 courses.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testCourses100() {
+		setUp();
+		int initial = data.getNumberOfCourses();
+		for (int i = 0; i < 100; i++){
+			data.getCourse((Integer.toString(i)));
+		}
+		assertEquals(initial + 100, data.getNumberOfCourses());
+	}
+	
+	/**
+	 * Testing performance/1 non functional requirement
+	 * The system shall support at least 10 different session types per course
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSessions10() {
+		setUp();
+		course = data.getCourse("PSD");
+		for(int i = 0; i < 10; i++){
+			data.assignSessionToCourse(Integer.toString(i), course.getCourseTitle());
+			Session session = data.getSession(Integer.toString(i));
+			session.setType(Integer.toString(i));
+		}
+	}
+	
+	private boolean getRandomBoolean(){
+		return  Math.random() < 0.5;
+	}
+	
+	/**
+	 * Testing performance/2 non functional requirement
+	 * The system shall support at least 1000 different users
+	 */
+	
+	@Test
+	public void testUsers1000(){
+		setUp();
+		for(int i = 0; i < 1000; i++){
+			new User(getRandomBoolean(), getRandomBoolean(), getRandomBoolean(), getRandomBoolean());
+		}
+	}
+	
+	/**
+	 * Testing performance/3 non functional requirement
+	 * The system shall support at least 20 different timetable slots per session
+	 * @throws PermissionsDeniedException 
+	 */
+	
+	@Test
+	public void testSlots20() throws PermissionsDeniedException{
+		setUp();
+		data.assignSessionToCourse(session.getTitle(), course.getCourseTitle());
+		User admin = new User(true, false, false, false);
+		long twentyWeeksLater = 20 * 7 * 24 * 60 * 60 * 1000 + System.currentTimeMillis();
+		int oneWeek = 7 * 24 * 60 * 60 * 1000;
+		admin.createTimeSlotForSession(new Date(), new Date(twentyWeeksLater), course.getCourseTitle(), session.getTitle());
+		session.setPeriodicity(oneWeek);
+	}
+	
+	/**
+	 * Testing performance/4 non functional requirement
+	 * The system shall support at least 100 different concurrently active users.
+	 * @throws InterruptedException 
+	 */
+	
+	@Test
+	public void concurrent100Users() throws InterruptedException{
+		Thread[] ths = new Thread[100];
+		for(int i = 0; i < 100; i++) {
+			ths[i] = new Thread(new Worker());
+			ths[i].start();
+		}
+		for(Thread t : ths)
+			t.join();
+	}
+	private synchronized boolean isAlive(){
+		return isAlive;
+	}
+	
+	private synchronized void setIsAlive(boolean alive){
+		isAlive = alive;
+	}
+	
+	private class Worker implements Runnable{
+		@Override
+		public void run() {
+			int i = 0;
+			long id = Thread.currentThread().getId();
+			User u = new User(true, true, true, true);
+			while(isAlive()) {
+				try {
+					synchronized(u.getData()) {
+						u.addSessionToCourse("lab" + Long.toString(id) + Integer.toString(i), "course" + Long.toString(id) + Integer.toString(i));
+					}
+					synchronized(u.getData()) {
+						u.assignRoomToSession("room" + Long.toString(id) + Integer.toString(i), "lab" + Long.toString(id) + Integer.toString(i));
+					}
+					synchronized(u.getData()) {
+						u.bookSlotForCourse(Long.toString(id), "lab" + Long.toString(id) + Integer.toString(i), "course" + Long.toString(id) + Integer.toString(i));
+					}
+				} catch (PermissionsDeniedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(Thread.activeCount() > 100)
+					setIsAlive(false);
+				i++;
+			}
+		}
 	}
 }

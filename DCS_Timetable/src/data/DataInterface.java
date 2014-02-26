@@ -91,4 +91,9 @@ public interface DataInterface {
 	 * @return true if the student already exists and false otherwise
 	 */
 	public boolean hasStudent(String studentId);
+	
+	/**
+	 * @return number of all existing courses in database
+	 */
+	public int getNumberOfCourses();
 }
