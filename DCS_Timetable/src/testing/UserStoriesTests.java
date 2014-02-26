@@ -36,7 +36,7 @@ public class UserStoriesTests {
 	private boolean isAlive = true;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception{
 		//Given a
 		course = new Course("PSD3");
 		student = new Student("1","Mihail","Tachev");
@@ -248,7 +248,6 @@ public class UserStoriesTests {
 	 */
 	@Test
 	public void testCourses100() {
-		setUp();
 		int initial = data.getNumberOfCourses();
 		for (int i = 0; i < 100; i++){
 			data.getCourse((Integer.toString(i)));
@@ -262,8 +261,7 @@ public class UserStoriesTests {
 	 * @throws Exception 
 	 */
 	@Test
-	public void testSessions10() {
-		setUp();
+	public void testSessions10(){
 		course = data.getCourse("PSD");
 		for(int i = 0; i < 10; i++){
 			data.assignSessionToCourse(Integer.toString(i), course.getCourseTitle());
@@ -279,11 +277,11 @@ public class UserStoriesTests {
 	/**
 	 * Testing performance/2 non functional requirement
 	 * The system shall support at least 1000 different users
+	 * @throws Exception 
 	 */
 	
 	@Test
 	public void testUsers1000(){
-		setUp();
 		for(int i = 0; i < 1000; i++){
 			new User(getRandomBoolean(), getRandomBoolean(), getRandomBoolean(), getRandomBoolean());
 		}
@@ -293,11 +291,11 @@ public class UserStoriesTests {
 	 * Testing performance/3 non functional requirement
 	 * The system shall support at least 20 different timetable slots per session
 	 * @throws PermissionsDeniedException 
+	 * @throws Exception 
 	 */
 	
 	@Test
-	public void testSlots20() throws PermissionsDeniedException{
-		setUp();
+	public void testSlots20() throws PermissionsDeniedException {
 		data.assignSessionToCourse(session.getTitle(), course.getCourseTitle());
 		User admin = new User(true, false, false, false);
 		long twentyWeeksLater = 20 * 7 * 24 * 60 * 60 * 1000 + System.currentTimeMillis();
