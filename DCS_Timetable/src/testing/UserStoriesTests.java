@@ -6,7 +6,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -227,6 +229,36 @@ public class UserStoriesTests {
 			String result = user.getInformationForSession(session.getTitle());
 			assertFalse(result.isEmpty());
 		} catch (PermissionsDeniedException e) {
+			fail("Unexpected permission denial");
+		}
+	}
+	
+	/**
+	 * Testing user story 9(the new one for last sprint):
+	 * As a administrator,
+	 * I want to check that there are no timetable slot clashes between courses
+	 * So that students are able to complete the course.
+	 */
+	@Test
+	public void checkCourseTimeSlotClashesTest() {
+		// if administrator
+		AdministratorRole user = new User(true,false,false,false);
+		try{
+		// Given two course with start and end
+			Calendar startPSD = new GregorianCalendar();
+			Calendar endPSD = new GregorianCalendar();
+			startPSD.set(2014, 03, 03, 13, 30);
+			endPSD.set(2014, 03, 03, 14, 30);
+			Course PSD = new Course("PSD3", startPSD, endPSD );
+			Calendar startTP = new GregorianCalendar();
+			Calendar endTP = new GregorianCalendar();
+			startTP.set(2014, 03, 03, 14, 45);
+			endTP.set(2014, 03, 03, 15, 30);
+			Course TP = new Course("PSD3", startTP, endTP);
+			//check if they overlap
+			assertTrue(user.checkCourseTimeSlotClashes(startPSD,endPSD,startTP,endTP));
+		} catch (PermissionsDeniedException e) {
+			// or throw permission denied exception
 			fail("Unexpected permission denial");
 		}
 	}
