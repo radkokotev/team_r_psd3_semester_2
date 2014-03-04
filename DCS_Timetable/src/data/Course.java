@@ -1,4 +1,5 @@
 package data;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,13 +8,25 @@ public class Course {
 	private String courseTitle;
 	private HashSet<Session> sessions;
 	private HashSet<Student> students;
-	
+	private Calendar start;
+	private Calendar end;
 	
 	public Course (String title) {
 		this.courseTitle = title;
 		sessions = new HashSet<Session>();
 		//has to instantiate this hashset as well
 		students = new HashSet<Student>();
+	}
+	
+	// new constructor with new properties instantiated
+	public Course (String title,Calendar start, Calendar end) {
+		this.courseTitle = title;
+		sessions = new HashSet<Session>();
+		//has to instantiate this hashset as well
+		students = new HashSet<Student>();
+		// start and end date provided
+		this.start = start;
+		this.end = end;
 	}
 		
 	public String getCourseTitle() {
