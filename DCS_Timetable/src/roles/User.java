@@ -1,5 +1,6 @@
 package roles;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import data.Course;
@@ -165,6 +166,11 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 		}	
 	}
 
+	@Override
+	public boolean checkCourseTimeSlotClashes(Calendar start1, Calendar end1, Calendar start2, Calendar end2){
+		return (start1.getTimeInMillis() >= end2.getTimeInMillis() || end1.getTimeInMillis() <= start2.getTimeInMillis()) ;
+	}
+	
 	@Override
 	public void createTimeSlotForSession(Date startTime, Date endTime, String courseTitle,
 			String sessionTitle) throws PermissionsDeniedException {
