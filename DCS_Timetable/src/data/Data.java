@@ -1,4 +1,5 @@
 package data;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -112,6 +113,10 @@ public class Data implements DataInterface{
 	
 	public boolean hasStudent(String studentId) {
 		return idsToStudents.containsKey(studentId);
+	}
+	
+	public boolean checkCourseTimeSlotClashes(Calendar start1, Calendar end1, Calendar start2, Calendar end2){
+		return (start1.getTimeInMillis() >= end2.getTimeInMillis() && end1.getTimeInMillis() <= start2.getTimeInMillis()) ;
 	}
 	
 	public int getNumberOfCourses(){
