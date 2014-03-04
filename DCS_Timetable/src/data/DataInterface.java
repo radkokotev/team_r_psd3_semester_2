@@ -99,7 +99,7 @@ public interface DataInterface {
 	 * @param end of Course1 data object
 	 * @param start of Course2 data object
 	 * @param end of Course2 data object
-	 * @return true if time slot overlaps
+	  * @return true if time slots do not overlap (no clashes)
 	 */
 	public boolean checkCourseTimeSlotClashes(Calendar start1, Calendar end1, Calendar start2, Calendar end2);
 	
