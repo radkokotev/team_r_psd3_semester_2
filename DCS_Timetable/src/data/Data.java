@@ -116,7 +116,7 @@ public class Data implements DataInterface{
 	}
 	
 	public boolean checkCourseTimeSlotClashes(Calendar start1, Calendar end1, Calendar start2, Calendar end2){
-		return (start1.getTimeInMillis() >= end2.getTimeInMillis() && end1.getTimeInMillis() <= start2.getTimeInMillis()) ;
+		return (start1.getTimeInMillis() >= end2.getTimeInMillis() || end1.getTimeInMillis() <= start2.getTimeInMillis()) ;
 	}
 	
 	public int getNumberOfCourses(){
