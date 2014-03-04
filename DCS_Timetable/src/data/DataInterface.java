@@ -1,5 +1,6 @@
 package data;
 
+import java.util.Calendar;
 import java.util.Set;
 
 /**
@@ -91,6 +92,16 @@ public interface DataInterface {
 	 * @return true if the student already exists and false otherwise
 	 */
 	public boolean hasStudent(String studentId);
+	
+	/**
+	 * Checking if there are time slot clashes between courses
+	 * @param start of Course1 data object
+	 * @param end of Course1 data object
+	 * @param start of Course2 data object
+	 * @param end of Course2 data object
+	 * @return true if time slot overlaps
+	 */
+	public boolean checkCourseTimeSlotClashes(Calendar start1, Calendar end1, Calendar start2, Calendar end2);
 	
 	/**
 	 * @return number of all existing courses in database
