@@ -18,19 +18,21 @@ import data.Student;
  * @version	1.0
  */
 
-public class User implements AdministratorRole, LecturerRole, StudentRole, TutorRole {
+public class User implements AdministratorRole, LecturerRole, StudentRole, TutorRole, MyCampusLogin {
 	private boolean isAdmin;
 	private boolean isLecturer;
 	private boolean isTutor;
 	private boolean isStudent;
+	private boolean isValidLogin;
 	private DataInterface data;
 	
 	public User(boolean isAdmin, boolean isLecturer, 
-			boolean isTutor, boolean isStudent) {
+			boolean isTutor, boolean isStudent, boolean isValidLogin) {
 		this.isAdmin = isAdmin;
 		this.isLecturer = isLecturer;
 		this.isTutor = isTutor;
 		this.isStudent = isStudent;
+		this.isValidLogin = isValidLogin;
 		//instantiate data object
 		this.data = Data.getSingleton();
 	}
@@ -192,6 +194,11 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 		}
 	}
 	
+	@Override
+	public boolean loginMyCampus() {
+		return isValidLogin;
+	}
+	
 	public void setData(DataInterface data2){
 		data = data2;
 	}
@@ -215,4 +222,5 @@ public class User implements AdministratorRole, LecturerRole, StudentRole, Tutor
 	public boolean isStudent(){
 		return isStudent;
 	}
+
 }

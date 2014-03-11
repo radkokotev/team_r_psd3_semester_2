@@ -15,7 +15,7 @@ public class Activator implements BundleActivator  {
 
   public void start(BundleContext context) throws Exception {
 	  System.out.println("User started");
-	  user = new User(true, true, true, true);
+	  user = new User(true, true, true, true, true);
 	  ServiceReference<DataInterface> serviceReference = context.getServiceReference(DataInterface.class);
 	  data = context.getService(serviceReference);
 	  user.setData(data);
